@@ -34,7 +34,7 @@ class ReusableTextField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: text,
           hintStyle: TextStyle(
-            color: Colors.grey[300],
+            color: Colors.grey[350],
             fontSize: 16,
           ),
           border: InputBorder.none,
