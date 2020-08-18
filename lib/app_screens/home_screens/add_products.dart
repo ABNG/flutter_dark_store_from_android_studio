@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_dark_store/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 const List<String> category = [
@@ -64,18 +65,38 @@ class _AddProductsState extends State<AddProducts> {
   }
 
   Future getImage(int index) async {
-    final PickedFile pickedFile =
-        await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = File(pickedFile.path);
-      imagePosition[index] = _image;
-    });
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(
+                "Pick Image",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: Text("You can pick image From"),
+              actions: [
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    pickImage(ImageSource.camera, index);
+                  },
+                  child: Text("CAMERA"),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    pickImage(ImageSource.gallery, index);
+                  },
+                  child: Text("GALLERY"),
+                ),
+              ],
+            ));
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _selectedValue = category[0];
     _subSelectedValue = sub_category[0];
@@ -121,7 +142,8 @@ class _AddProductsState extends State<AddProducts> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           color: Colors.white,
-                          child: imagePosition[index] == null
+                          child: imagePosition.keys.toList().contains(index) ==
+                                  false
                               ? IconButton(
                                   icon: Icon(
                                     Icons.add_circle,
@@ -133,7 +155,9 @@ class _AddProductsState extends State<AddProducts> {
                                 )
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
-                                  child: Image.file(_image, fit: BoxFit.cover)),
+                                  child: Image.file(imagePosition[index],
+                                      fit: BoxFit.cover),
+                                ),
                         ),
                       ),
                     ),
@@ -247,6 +271,7 @@ class _AddProductsState extends State<AddProducts> {
                               ),
                               ReusableTextFieldWithCenter(
                                 text: "5",
+                                isQuantity: true,
                               ),
                             ],
                           ),
@@ -318,7 +343,7 @@ class _AddProductsState extends State<AddProducts> {
                                 height: 5,
                               ),
                               ReusableTextFieldWithCenter(
-                                text: "AED 2500",
+                                text: "2500",
                               ),
                             ],
                           ),
@@ -356,7 +381,7 @@ class _AddProductsState extends State<AddProducts> {
                                   height: 5,
                                 ),
                                 ReusableTextFieldWithCenter(
-                                  text: "AED 2300",
+                                  text: "2300",
                                 ),
                               ],
                             ),
@@ -394,6 +419,7 @@ class _AddProductsState extends State<AddProducts> {
                       padding: EdgeInsets.all(0),
                       alignment: Alignment.centerLeft,
                       onPressed: () {
+                        Utils.hideKeyboard(context);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -451,39 +477,63 @@ class _AddProductsState extends State<AddProducts> {
       ),
     );
   }
+
+  void pickImage(ImageSource imageSource, int index) async {
+    final PickedFile pickedFile = await picker.getImage(source: imageSource);
+
+    setState(() {
+      _image = File(pickedFile.path);
+      imagePosition.putIfAbsent(index, () => _image);
+    });
+  }
 }
 
 class ReusableTextFieldWithCenter extends StatelessWidget {
   final String text;
-
-  ReusableTextFieldWithCenter({this.text});
+  final bool isQuantity;
+  ReusableTextFieldWithCenter({this.text, this.isQuantity = false});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      keyboardType: TextInputType.number,
-      style: TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-      ),
-      textAlign: TextAlign.center,
-      cursorColor: Colors.grey,
-      decoration: InputDecoration(
-        hintText: text,
-        hintStyle: TextStyle(
-          color: Colors.grey[300],
+    return SizedBox(
+      height: 35,
+      child: TextField(
+        keyboardType: TextInputType.number,
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
+        cursorColor: Colors.grey,
+        decoration: InputDecoration(
+          hintText: text,
+          hintStyle: TextStyle(
             color: Colors.grey[300],
           ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey[300],
+            ),
+          ),
+          isDense: true,
+          contentPadding: EdgeInsets.all(0),
+          prefixIcon: isQuantity
+              ? SizedBox()
+              : Container(
+                  width: 2,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "AED",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
         ),
-        isDense: true,
-        contentPadding: EdgeInsets.all(8),
       ),
     );
   }

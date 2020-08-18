@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/model/order_details.dart';
 import 'package:flutter_dark_store/model/order_model.dart';
 
@@ -22,5 +23,9 @@ class Utils {
     int index = time.lastIndexOf(":");
     String subValue = time.substring(0, index) + " PM";
     return subValue;
+  }
+
+  static void hideKeyboard(BuildContext context) {
+    FocusScope.of(context).unfocus();
   }
 }

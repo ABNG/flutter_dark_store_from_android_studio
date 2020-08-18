@@ -54,7 +54,9 @@ class StoredInfo extends StatelessWidget {
                   ReusableDarkText(
                     text: "CONTACT NUMBER",
                   ),
-                  ReusableEmptyTextField(),
+                  ReusableEmptyTextField(
+                    isNumber: true,
+                  ),
                   SizedBox(
                     height: SizeConfig.screenHeight * 0.4,
                   ),

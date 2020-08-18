@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class ReusableEmptyTextField extends StatelessWidget {
   final int maxLines;
+  final bool isNumber;
 
-  ReusableEmptyTextField({this.maxLines = 1});
+  ReusableEmptyTextField({this.maxLines = 1, this.isNumber = false});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class ReusableEmptyTextField extends StatelessWidget {
         child: TextField(
           cursorColor: Colors.grey,
           maxLines: maxLines,
+          keyboardType: isNumber ? TextInputType.phone : TextInputType.text,
           decoration: InputDecoration(
             hintStyle: TextStyle(
               color: Colors.grey[300],

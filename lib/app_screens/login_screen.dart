@@ -38,6 +38,7 @@ class LogInScreen extends StatelessWidget {
                   text: "PASSWORD",
                   icon: Icons.lock_outline,
                   main: true,
+                  isPassword: true,
                 ),
                 SizedBox(
                   height: 20,

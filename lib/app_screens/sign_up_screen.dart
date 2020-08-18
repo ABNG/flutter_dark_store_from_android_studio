@@ -38,11 +38,13 @@ class SignupScreen extends StatelessWidget {
                     text: "PASSWORD",
                     icon: Icons.lock_open,
                     main: false,
+                    isPassword: true,
                   ),
                   ReusableTextField(
                     text: "CONFIRM PASSWORD",
                     icon: Icons.lock_outline,
                     main: false,
+                    isPassword: true,
                   ),
                   SizedBox(
                     height: SizeConfig.screenHeight * 0.03,

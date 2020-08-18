@@ -5,8 +5,9 @@ class ReusableTextField extends StatelessWidget {
   final String text;
   final IconData icon;
   final bool main;
+  final bool isPassword;
 
-  ReusableTextField({this.text, this.icon, this.main});
+  ReusableTextField({this.text, this.icon, this.main, this.isPassword = false});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class ReusableTextField extends StatelessWidget {
           ]),
       child: TextField(
         cursorColor: Colors.grey,
+        obscureText: isPassword,
         decoration: InputDecoration(
           hintText: text,
           hintStyle: TextStyle(
