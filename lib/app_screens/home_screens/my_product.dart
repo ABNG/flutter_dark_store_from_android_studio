@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/constants/const.dart';
+import 'package:flutter_dark_store/model/my_product.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_raised_button.dart';
+import 'package:flutter_dark_store/utils/SizeConfig.dart';
 
 class MyProduct extends StatelessWidget {
   @override
@@ -31,28 +33,30 @@ class MyProduct extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 3,
                 crossAxisSpacing: 3,
-                childAspectRatio: 0.83,
-                children: [
-                  Card(
+                childAspectRatio: 0.78,
+                children: List.generate(
+                  MyProducts.myProducts.length,
+                  (index) => Card(
                     elevation: 3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          height: 120,
-                          child: Placeholder(),
+                          height: SizeConfig.screenHeight * 0.15,
+                          child: Image.asset(
+                            MyProducts.myProducts[index].image,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text("hello"),
+                        Spacer(),
+                        Text(MyProducts.myProducts[index].name),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           textBaseline: TextBaseline.alphabetic,
                           children: [
                             Text(
-                              "99.00",
+                              "${MyProducts.myProducts[index].price}",
                               style: TextStyle(
                                 fontSize: 22,
                                 color: Colors.red,
@@ -67,9 +71,7 @@ class MyProduct extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        Spacer(),
                         Row(
                           children: [
                             Expanded(
@@ -77,7 +79,7 @@ class MyProduct extends StatelessWidget {
                                 text: "Remove",
                                 pressMe: () {},
                                 color: Colors.red,
-                                height: 35,
+                                height: SizeConfig.screenHeight * 0.04,
                               ),
                             ),
                             Expanded(
@@ -85,7 +87,7 @@ class MyProduct extends StatelessWidget {
                                 text: "Edit",
                                 pressMe: () {},
                                 color: Colors.green,
-                                height: 35,
+                                height: SizeConfig.screenHeight * 0.04,
                               ),
                             )
                           ],
@@ -93,7 +95,7 @@ class MyProduct extends StatelessWidget {
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
             )
           ],
