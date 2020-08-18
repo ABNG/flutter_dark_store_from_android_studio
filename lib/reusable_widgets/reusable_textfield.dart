@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
 
 class ReusableTextField extends StatelessWidget {
@@ -52,10 +53,7 @@ class ReusableTextField extends StatelessWidget {
                   size: 30,
                 ),
         ),
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
+        style: defaultStyle,
       ),
     );
   }

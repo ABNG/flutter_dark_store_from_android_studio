@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/reusable_widgets/Reusable_material_button.dart';
 import 'package:flutter_dark_store/reusable_widgets/empty_text_field.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_dark_text.dart';
@@ -38,10 +39,7 @@ class _GetHelpState extends State<GetHelp> {
       appBar: AppBar(
         title: Text(
           "GET HELP",
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+          style: defaultStyle,
         ),
       ),
       body: SingleChildScrollView(
@@ -101,9 +99,7 @@ class _GetHelpState extends State<GetHelp> {
                               value: value,
                               child: Text(
                                 value,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                                style: defaultStyle.copyWith(
                                   fontSize: 14,
                                 ),
                               ),
@@ -152,9 +148,7 @@ class _GetHelpState extends State<GetHelp> {
                               value: value,
                               child: Text(
                                 value,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                                style: defaultStyle.copyWith(
                                   fontSize: 14,
                                 ),
                               ),

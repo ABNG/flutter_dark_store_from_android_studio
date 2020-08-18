@@ -3,6 +3,7 @@ import 'package:flutter_dark_store/app_screens/home_screens/add_products.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/my_order_screen.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/sales_screen.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/stored_info.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/reusable_widgets/appbar_icon.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_logo.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
@@ -86,10 +87,7 @@ class HomeScreen extends StatelessWidget {
                     width: 120,
                     child: Text(
                       itemList[index]['title'],
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: defaultStyle,
                     ),
                   )
                 ],

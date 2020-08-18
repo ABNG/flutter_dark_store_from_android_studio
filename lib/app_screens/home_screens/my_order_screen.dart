@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/tab_screens/confirmed_order.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/tab_screens/delivered_order.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/tab_screens/new_orders.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/reusable_widgets/appbar_icon.dart';
 
 class MyOrderScreen extends StatelessWidget {
@@ -13,10 +14,7 @@ class MyOrderScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             "MY ORDERS",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+            style: defaultStyle,
           ),
           actions: [AppbarIcon()],
           bottom: PreferredSize(

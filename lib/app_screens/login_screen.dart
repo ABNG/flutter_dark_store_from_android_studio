@@ -61,10 +61,7 @@ class LogInScreen extends StatelessWidget {
                             builder: (BuildContext context) => SignupScreen())),
                     child: Text(
                       "REGISTER",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: defaultStyle,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),

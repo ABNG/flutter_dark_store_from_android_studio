@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 
 class ReusableDarkText extends StatelessWidget {
   final String text;
@@ -9,8 +10,7 @@ class ReusableDarkText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),
+      style: defaultStyle.copyWith(fontSize: 12),
     );
   }
 }

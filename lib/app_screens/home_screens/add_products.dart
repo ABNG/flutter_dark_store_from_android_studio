@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -70,12 +71,9 @@ class _AddProductsState extends State<AddProducts> {
         builder: (context) => AlertDialog(
               title: Text(
                 "Pick Image",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: defaultStyle,
               ),
-              content: Text("You can pick image From"),
+              content: Text("You can pick image from"),
               actions: [
                 FlatButton(
                   onPressed: () {
@@ -117,10 +115,7 @@ class _AddProductsState extends State<AddProducts> {
                     vertical: SizeConfig.screenHeight * 0.01),
                 child: Text(
                   "PRODUCT PHOTOS",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: defaultStyle,
                 ),
               ),
               Container(
@@ -170,10 +165,7 @@ class _AddProductsState extends State<AddProducts> {
                     vertical: SizeConfig.screenHeight * 0.03),
                 child: Text(
                   "PRODUCT DETAILS",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: defaultStyle,
                 ),
               ),
               Padding(
@@ -237,9 +229,7 @@ class _AddProductsState extends State<AddProducts> {
                                           value: value,
                                           child: Text(
                                             value,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
+                                            style: defaultStyle.copyWith(
                                               fontSize: 12,
                                             ),
                                           ),
@@ -309,9 +299,7 @@ class _AddProductsState extends State<AddProducts> {
                                   value: value,
                                   child: Text(
                                     value,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                    style: defaultStyle.copyWith(
                                       fontSize: 12,
                                     ),
                                   ),
@@ -499,10 +487,7 @@ class ReusableTextFieldWithCenter extends StatelessWidget {
       height: 35,
       child: TextField(
         keyboardType: TextInputType.number,
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
+        style: defaultStyle,
         cursorColor: Colors.grey,
         decoration: InputDecoration(
           hintText: text,
@@ -547,10 +532,7 @@ class ReusableTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-      ),
+      style: defaultStyle,
       maxLines: maxLines,
       cursorColor: Colors.grey,
       decoration: InputDecoration(
@@ -579,9 +561,7 @@ class ReusableText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
+      style: defaultStyle.copyWith(
         fontSize: 10,
       ),
     );

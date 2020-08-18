@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/order_details.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_raised_button.dart';
 
 import '../app_screens/home_screens/tab_screens/order_enum.dart';
@@ -55,9 +56,7 @@ class ReusableItemContainer extends StatelessWidget {
             left: 7,
             child: Text(
               "DATE: ${order.date}",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+              style: defaultStyle.copyWith(
                 fontSize: 12,
               ),
             ),
@@ -67,9 +66,7 @@ class ReusableItemContainer extends StatelessWidget {
             left: 7,
             child: Text(
               "TIME: ${order.time}",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+              style: defaultStyle.copyWith(
                 fontSize: 12,
               ),
             ),

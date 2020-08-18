@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/tab_screens/order_enum.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/model/order_model.dart';
 import 'package:flutter_dark_store/reusable_widgets/Reusable_item_container.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
@@ -38,10 +39,7 @@ class SaleScreen extends StatelessWidget {
                       ),
                       Text(
                         "TOTAL ORDERS",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: defaultStyle,
                       )
                     ],
                   ),
@@ -62,10 +60,7 @@ class SaleScreen extends StatelessWidget {
                           children: [
                             Text(
                               "AED ",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: defaultStyle,
                             ),
                             Text(
                               "${Utils.getTotalPrice(newOrder).toStringAsFixed(2)}",
@@ -79,10 +74,7 @@ class SaleScreen extends StatelessWidget {
                       ),
                       Text(
                         "TOTAL EARNINGS",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: defaultStyle,
                       )
                     ],
                   ),

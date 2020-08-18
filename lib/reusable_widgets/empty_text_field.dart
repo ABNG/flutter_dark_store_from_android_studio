@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 
 class ReusableEmptyTextField extends StatelessWidget {
   final int maxLines;
@@ -36,10 +37,7 @@ class ReusableEmptyTextField extends StatelessWidget {
             contentPadding: EdgeInsets.all(10),
             isDense: true,
           ),
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+          style: defaultStyle,
         ));
   }
 }

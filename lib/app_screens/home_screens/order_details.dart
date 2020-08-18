@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/model/order_details.dart';
 import 'package:flutter_dark_store/model/order_model.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
@@ -323,10 +324,7 @@ class ReusableTitle extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30.0, bottom: 5),
       child: Text(
         title,
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
+        style: defaultStyle,
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dark_store/constants/const.dart';
 
 import 'appbar_icon.dart';
 
@@ -14,10 +15,7 @@ class ReusableAppbar extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           title,
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+          style: defaultStyle,
         ),
         actions: [
           AppbarIcon(),
