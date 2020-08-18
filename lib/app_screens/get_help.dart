@@ -4,6 +4,7 @@ import 'package:flutter_dark_store/reusable_widgets/Reusable_material_button.dar
 import 'package:flutter_dark_store/reusable_widgets/empty_text_field.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_dark_text.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const List<String> type = [
   "One",
@@ -25,6 +26,7 @@ class GetHelp extends StatefulWidget {
 class _GetHelpState extends State<GetHelp> {
   String _selectedType;
   String _selectedPriority;
+  TextEditingController dialogMessageController = TextEditingController();
 
   @override
   void initState() {
@@ -201,8 +203,11 @@ class _GetHelpState extends State<GetHelp> {
                         children: [
                           Expanded(
                             flex: 4,
-                            child: ReusableDarkText(
-                                text: "CONTACT US THROUGH WHATSAPP"),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: ReusableDarkText(
+                                  text: "CONTACT US THROUGH WHATSAPP"),
+                            ),
                           ),
                           Expanded(
                             child: Align(
@@ -220,10 +225,60 @@ class _GetHelpState extends State<GetHelp> {
                     Positioned(
                       top: -2,
                       right: 0,
-                      child: Image.asset(
-                        'images/whatsapp.png',
-                        fit: BoxFit.cover,
-                        width: 45,
+                      child: GestureDetector(
+                        onTap: () {
+                          String number = "918179015345";
+                          String msg;
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: Text("Enter Your Message"),
+                                    content: Theme(
+                                      data: ThemeData(
+                                        primaryColor: Colors.blue,
+                                      ),
+                                      child: TextField(
+                                        controller: dialogMessageController,
+                                        style: defaultStyle,
+                                        autofocus: true,
+                                        decoration: InputDecoration(
+                                          hintText: "enter message",
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text("CANCEL"),
+                                      ),
+                                      FlatButton(
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                          msg = dialogMessageController.text;
+                                          if (msg.isEmpty) {
+                                          } else {
+                                            String url =
+                                                "https://api.whatsapp.com/send?phone=$number&text=$msg";
+                                            String encodedUrl =
+                                                Uri.encodeFull(url);
+                                            if (await canLaunch(encodedUrl)) {
+                                              await launch(encodedUrl,
+                                                  forceWebView: true);
+                                            } else {
+                                              throw 'Could not launch $encodedUrl';
+                                            }
+                                          }
+                                        },
+                                        child: Text("OK"),
+                                      )
+                                    ],
+                                  ));
+                        },
+                        child: Image.asset(
+                          'images/whatsapp.png',
+                          fit: BoxFit.cover,
+                          width: 45,
+                        ),
                       ),
                     ),
                   ],

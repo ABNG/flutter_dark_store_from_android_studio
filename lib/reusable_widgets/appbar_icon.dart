@@ -11,7 +11,6 @@ class AppbarIcon extends StatelessWidget {
         icon: Image.asset(
           'images/consulting.png',
           fit: BoxFit.cover,
-          width: 30,
         ));
   }
 }

@@ -68,60 +68,31 @@ class _AddProductsState extends State<AddProducts> {
 
   Future getImage(int index) async {
     showDialog(
-        context: context,
-        builder: (context) => Platform.isAndroid
-            ? AlertDialog(
-                title: Text(
-                  "Pick Image",
-                  style: defaultStyle,
-                ),
-                content: Text("You can pick image from"),
-                actions: [
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      pickImage(ImageSource.camera, index);
-                    },
-                    child: Text("CAMERA"),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      pickImage(ImageSource.gallery, index);
-                    },
-                    child: Text("GALLERY"),
-                  ),
-                ],
-              )
-            : CupertinoAlertDialog(
-                title: Text(
-                  "Pick Image",
-                  style: defaultStyle,
-                ),
-                content: Text("You can pick image from"),
-                actions: [
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      pickImage(ImageSource.camera, index);
-                    },
-                    child: Text(
-                      "CAMERA",
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      pickImage(ImageSource.gallery, index);
-                    },
-                    child: Text(
-                      "GALLERY",
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ),
-                ],
-              ));
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "Pick Image",
+          style: defaultStyle,
+        ),
+        content: Text("You can pick image from"),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+              pickImage(ImageSource.camera, index);
+            },
+            child: Text("CAMERA"),
+          ),
+          FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+              pickImage(ImageSource.gallery, index);
+            },
+            child: Text("GALLERY"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -442,31 +413,18 @@ class _AddProductsState extends State<AddProducts> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return Platform.isAndroid
-                                ? AlertDialog(
-                                    title: Text('Select Color'),
-                                    content: SingleChildScrollView(
-                                      child: BlockPicker(
-                                        pickerColor: currentColor,
-                                        onColorChanged: changeColor,
+                            return AlertDialog(
+                              title: Text('Select Color'),
+                              content: SingleChildScrollView(
+                                child: BlockPicker(
+                                  pickerColor: currentColor,
+                                  onColorChanged: changeColor,
 //                                          availableColors: [
 //                                          Color(0xffffaa00),
 //                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : CupertinoAlertDialog(
-                                    title: Text('Select Color'),
-                                    content: SingleChildScrollView(
-                                      child: BlockPicker(
-                                        pickerColor: currentColor,
-                                        onColorChanged: changeColor,
-//                                        availableColors: [
-//                                          Color(0xffffaa00),
-//                                        ],
-                                      ),
-                                    ),
-                                  );
+                                ),
+                              ),
+                            );
                           },
                         );
                       },
