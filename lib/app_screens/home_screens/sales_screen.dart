@@ -89,7 +89,7 @@ class SaleScreen extends StatelessWidget {
             padding:
                 EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.05),
             child: Text(
-              "DELIVERED ORDER",
+              "DELIVERED ORDERS",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),

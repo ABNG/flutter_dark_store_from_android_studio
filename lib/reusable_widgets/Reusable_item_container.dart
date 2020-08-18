@@ -43,7 +43,7 @@ class ReusableItemContainer extends StatelessWidget {
               color: Colors.black,
               padding: EdgeInsets.symmetric(vertical: 6, horizontal: 30),
               child: Text(
-                "AED ${order.price}",
+                "AED ${order.price.toStringAsFixed(2)}",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
