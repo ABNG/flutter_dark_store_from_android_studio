@@ -21,14 +21,16 @@ const List<String> sub_category = [
 
 List<Widget> addColors = [
   Container(
-    width: 40,
-    height: 40,
+    width: 38,
+    height: 35,
     margin: EdgeInsets.only(right: 10),
     decoration: BoxDecoration(
       color: Colors.amber,
       borderRadius: BorderRadius.circular(8),
     ),
-    child: Icon(Icons.minimize),
+    child: Icon(
+      Icons.minimize,
+    ),
   ),
 ];
 
@@ -51,8 +53,8 @@ class _AddProductsState extends State<AddProducts> {
     setState(() {
       addColors.add(
         Container(
-          width: 40,
-          height: 40,
+          width: 38,
+          height: 35,
           margin: EdgeInsets.only(right: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -68,29 +70,59 @@ class _AddProductsState extends State<AddProducts> {
   Future getImage(int index) async {
     showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-              title: Text(
-                "Pick Image",
-                style: defaultStyle,
-              ),
-              content: Text("You can pick image from"),
-              actions: [
-                FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    pickImage(ImageSource.camera, index);
-                  },
-                  child: Text("CAMERA"),
+        builder: (context) => Platform.isAndroid
+            ? AlertDialog(
+                title: Text(
+                  "Pick Image",
+                  style: defaultStyle,
                 ),
-                FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    pickImage(ImageSource.gallery, index);
-                  },
-                  child: Text("GALLERY"),
+                content: Text("You can pick image from"),
+                actions: [
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      pickImage(ImageSource.camera, index);
+                    },
+                    child: Text("CAMERA"),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      pickImage(ImageSource.gallery, index);
+                    },
+                    child: Text("GALLERY"),
+                  ),
+                ],
+              )
+            : CupertinoAlertDialog(
+                title: Text(
+                  "Pick Image",
+                  style: defaultStyle,
                 ),
-              ],
-            ));
+                content: Text("You can pick image from"),
+                actions: [
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      pickImage(ImageSource.camera, index);
+                    },
+                    child: Text(
+                      "CAMERA",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      pickImage(ImageSource.gallery, index);
+                    },
+                    child: Text(
+                      "GALLERY",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                ],
+              ));
   }
 
   @override
@@ -411,15 +443,31 @@ class _AddProductsState extends State<AddProducts> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Select Color'),
-                              content: SingleChildScrollView(
-                                child: BlockPicker(
-                                  pickerColor: currentColor,
-                                  onColorChanged: changeColor,
-                                ),
-                              ),
-                            );
+                            return Platform.isAndroid
+                                ? AlertDialog(
+                                    title: Text('Select Color'),
+                                    content: SingleChildScrollView(
+                                      child: BlockPicker(
+                                        pickerColor: currentColor,
+                                        onColorChanged: changeColor,
+//                                          availableColors: [
+//                                          Color(0xffffaa00),
+//                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : CupertinoAlertDialog(
+                                    title: Text('Select Color'),
+                                    content: SingleChildScrollView(
+                                      child: BlockPicker(
+                                        pickerColor: currentColor,
+                                        onColorChanged: changeColor,
+//                                        availableColors: [
+//                                          Color(0xffffaa00),
+//                                        ],
+                                      ),
+                                    ),
+                                  );
                           },
                         );
                       },
