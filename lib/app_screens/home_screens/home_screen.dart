@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/add_products.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/my_order_screen.dart';
+import 'package:flutter_dark_store/app_screens/home_screens/my_product.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/sales_screen.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/stored_info.dart';
 import 'package:flutter_dark_store/constants/const.dart';
@@ -62,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                   navigation(context, MyOrderScreen());
                   break;
                 case 3:
-                  print("page 3");
+                  navigation(context, MyProduct());
                   break;
                 case 4:
                   navigation(context, SaleScreen());

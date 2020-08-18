@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/constants/const.dart';
+import 'package:flutter_dark_store/reusable_widgets/Reusable_material_button.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -457,6 +458,16 @@ class _AddProductsState extends State<AddProducts> {
                     ),
                     ReusableTextField(
                       maxLines: 5,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: SizeConfig.screenWidth,
+                      child: ReusableMaterialButton(
+                        title: "ADD ITEM",
+                        pressMe: () {},
+                      ),
                     ),
                     SizedBox(
                       height: 20,

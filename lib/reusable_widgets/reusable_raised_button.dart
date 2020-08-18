@@ -17,9 +17,11 @@ class ReusableRaisedButton extends StatelessWidget {
             borderRadius: height == 30.0
                 ? BorderRadius.circular(5)
                 : BorderRadius.circular(0)),
-        child: Text(
-          text,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        child: FittedBox(
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ),
         color: color,
         onPressed: pressMe,
