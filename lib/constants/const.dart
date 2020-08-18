@@ -4,3 +4,7 @@ const subtitle = Text(
   "STORES",
   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
 );
+const defaultStyle = TextStyle(
+  color: Colors.black,
+  fontWeight: FontWeight.bold,
+);
