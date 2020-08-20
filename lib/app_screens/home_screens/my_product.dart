@@ -5,7 +5,12 @@ import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_raised_button.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
 
-class MyProduct extends StatelessWidget {
+class MyProduct extends StatefulWidget {
+  @override
+  _MyProductState createState() => _MyProductState();
+}
+
+class _MyProductState extends State<MyProduct> {
   @override
   Widget build(BuildContext context) {
     return ReusableAppbar(
@@ -56,7 +61,7 @@ class MyProduct extends StatelessWidget {
                           textBaseline: TextBaseline.alphabetic,
                           children: [
                             Text(
-                              "${MyProducts.myProducts[index].price}",
+                              "${MyProducts.myProducts[index].price.toStringAsFixed(2)}",
                               style: TextStyle(
                                 fontSize: 22,
                                 color: Colors.red,
@@ -77,7 +82,11 @@ class MyProduct extends StatelessWidget {
                             Expanded(
                               child: ReusableRaisedButton(
                                 text: "Remove",
-                                pressMe: () {},
+                                pressMe: () {
+                                  setState(() {
+                                    MyProducts.myProducts.removeAt(index);
+                                  });
+                                },
                                 color: Colors.red,
                                 height: SizeConfig.screenHeight * 0.04,
                               ),

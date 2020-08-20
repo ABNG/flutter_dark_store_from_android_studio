@@ -7,8 +7,18 @@ class ReusableTextField extends StatelessWidget {
   final IconData icon;
   final bool main;
   final bool isPassword;
+  final TextEditingController controller;
+  final Function onChange;
+  final TextInputType textInputType;
 
-  ReusableTextField({this.text, this.icon, this.main, this.isPassword = false});
+  ReusableTextField(
+      {this.text,
+      this.icon,
+      this.main,
+      this.controller,
+      this.onChange,
+      this.textInputType = TextInputType.text,
+      this.isPassword = false});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +38,23 @@ class ReusableTextField extends StatelessWidget {
               spreadRadius: 2,
             )
           ]),
-      child: TextField(
+      child: TextFormField(
+        controller: controller,
+        keyboardType: textInputType,
         cursorColor: Colors.grey,
         obscureText: isPassword,
+        validator: (value) {
+          if (value.isEmpty) {
+            return "Field is Empty";
+          } else if (textInputType == TextInputType.emailAddress) {
+            RegExp exp = RegExp(
+                r"^[a-zA-Z0-9]+@[a-z]+\.\w{3}$"); // r"^[a-zA-Z0-9]+@(gmail|yahoo|outlook)\.\w{3}$"
+            if (exp.hasMatch(value) == false) {
+              return "email format mismatch";
+            }
+          }
+          return null;
+        },
         decoration: InputDecoration(
           hintText: text,
           hintStyle: TextStyle(
@@ -53,6 +77,7 @@ class ReusableTextField extends StatelessWidget {
                   size: 30,
                 ),
         ),
+        onChanged: onChange,
         style: defaultStyle,
       ),
     );

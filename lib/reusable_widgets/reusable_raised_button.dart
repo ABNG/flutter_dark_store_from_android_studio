@@ -5,8 +5,14 @@ class ReusableRaisedButton extends StatelessWidget {
   final color;
   final double height;
   final Function pressMe;
+  final Color btnColor;
 
-  ReusableRaisedButton({this.text, this.color, this.pressMe, this.height = 30});
+  ReusableRaisedButton(
+      {this.text,
+      this.color,
+      this.pressMe,
+      this.btnColor = Colors.white,
+      this.height = 30});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class ReusableRaisedButton extends StatelessWidget {
         child: FittedBox(
           child: Text(
             text,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: btnColor, fontWeight: FontWeight.bold),
           ),
         ),
         color: color,

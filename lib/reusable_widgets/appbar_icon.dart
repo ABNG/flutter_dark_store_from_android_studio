@@ -6,11 +6,13 @@ class AppbarIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) => GetHelp())),
-        icon: Image.asset(
-          'images/consulting.png',
-          fit: BoxFit.cover,
-        ));
+      onPressed: () => Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) => GetHelp())),
+      icon: Image.asset(
+        'images/consulting.png',
+        fit: BoxFit.cover,
+        width: 24,
+      ),
+    );
   }
 }

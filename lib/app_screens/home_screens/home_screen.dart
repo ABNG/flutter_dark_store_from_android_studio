@@ -6,6 +6,7 @@ import 'package:flutter_dark_store/app_screens/home_screens/sales_screen.dart';
 import 'package:flutter_dark_store/app_screens/home_screens/stored_info.dart';
 import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/reusable_widgets/appbar_icon.dart';
+import 'package:flutter_dark_store/reusable_widgets/appbar_logout_icon.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_logo.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
 
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
           fontSize: 20,
           letterSpacing: 5.5,
         ),
-        actions: [AppbarIcon()],
+        actions: [AppbarLogoutIcon(), AppbarIcon()],
       ),
       body: ListView(
         children: List.generate(

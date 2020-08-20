@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/constants/const.dart';
 import 'package:flutter_dark_store/reusable_widgets/Reusable_material_button.dart';
 import 'package:flutter_dark_store/reusable_widgets/empty_text_field.dart';
+import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_dark_text.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -37,13 +38,9 @@ class _GetHelpState extends State<GetHelp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "GET HELP",
-          style: defaultStyle,
-        ),
-      ),
+    return ReusableAppbar(
+      title: "GET HELP",
+      showIcon: false,
       body: SingleChildScrollView(
         child: ConstrainedBox(
           constraints: BoxConstraints(
@@ -255,8 +252,7 @@ class _GetHelpState extends State<GetHelp> {
                                         onPressed: () async {
                                           Navigator.pop(context);
                                           msg = dialogMessageController.text;
-                                          if (msg.isEmpty) {
-                                          } else {
+                                          if (msg.isNotEmpty) {
                                             String url =
                                                 "https://api.whatsapp.com/send?phone=$number&text=$msg";
                                             String encodedUrl =
