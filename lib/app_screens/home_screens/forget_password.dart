@@ -13,7 +13,6 @@ class ForgetPassword extends StatefulWidget {
 
 class _ForgetPasswordState extends State<ForgetPassword> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  //final GlobalKey<ScaffoldState> _scafold = GlobalKey<ScaffoldState>();
   TextEditingController mailController = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
@@ -69,29 +68,33 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     alignment: Alignment.center,
                     child: SizedBox(
                       width: SizeConfig.screenWidth * 0.75,
-                      child: ReusableMaterialButton(
-                        title: "SAVE",
-                        pressMe: () async {
-                          if (_form.currentState.validate()) {
-                            if (password.text == confirmPassword.text) {
-                              Map<String, dynamic> map = {
-                                "email": mailController.text,
-                                "password": password.text
-                              };
-                              Response response = await DBHelper()
-                                  .emailAuth(map, "store/emailAuth");
-                              Map<String, dynamic> result = response.data;
-                              if (result["error"] != null) {
-                                print(result["error"]);
+                      child: Builder(
+                        builder: (BuildContext context) =>
+                            ReusableMaterialButton(
+                          title: "SAVE",
+                          pressMe: () async {
+                            if (_form.currentState.validate()) {
+                              if (password.text == confirmPassword.text) {
+                                Map<String, dynamic> map = {
+                                  "email": mailController.text,
+                                  "password": password.text
+                                };
+                                Response response = await DBHelper()
+                                    .emailAuth(map, "store/emailAuth");
+                                Map<String, dynamic> result = response.data;
+                                if (result["error"] != null) {
+                                  print(result["error"]);
+                                } else {
+                                  Navigator.pop(context);
+                                }
                               } else {
-                                Navigator.pop(context);
+                                showSnackbar(
+                                    "password and confirm password does not match",
+                                    context);
                               }
-                            } else {
-//                              showSnackbar(
-//                                  "password and confirm password does not match");
                             }
-                          }
-                        },
+                          },
+                        ),
                       ),
                     ),
                   )
@@ -104,22 +107,22 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     );
   }
 
-//  void showSnackbar(String result) {
-//    _scafold.currentState.showSnackBar(
-//      SnackBar(
-//        content: Text(
-//          result,
-//          style: TextStyle(
-//            color: Colors.white,
-//            fontWeight: FontWeight.bold,
-//          ),
-//        ),
-//        action: SnackBarAction(
-//          onPressed: () {},
-//          label: "OK",
-//          textColor: Colors.white,
-//        ),
-//      ),
-//    );
-//  }
+  void showSnackbar(String result, BuildContext context) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          result,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        action: SnackBarAction(
+          onPressed: () {},
+          label: "OK",
+          textColor: Colors.white,
+        ),
+      ),
+    );
+  }
 }

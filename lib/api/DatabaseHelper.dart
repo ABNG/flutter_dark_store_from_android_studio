@@ -21,4 +21,10 @@ class DBHelper {
     Response response = await Dio().post(fullUrl, data: jsonEncode(data));
     return response;
   }
+
+  Future<Response> addProduct(data, apiUrl) async {
+    var fullUrl = _url + apiUrl;
+    Response response = await Dio().post(fullUrl, data: data);
+    return response;
+  }
 }

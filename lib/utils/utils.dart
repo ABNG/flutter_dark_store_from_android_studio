@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/model/order_details.dart';
 import 'package:flutter_dark_store/model/order_model.dart';
@@ -27,5 +29,9 @@ class Utils {
 
   static void hideKeyboard(BuildContext context) {
     FocusScope.of(context).unfocus();
+  }
+
+  static String convertToList(Map<int, File> images) {
+    return images.values.toList().toString();
   }
 }
