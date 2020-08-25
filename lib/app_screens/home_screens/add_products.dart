@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dark_store/api/DatabaseHelper.dart';
 import 'package:flutter_dark_store/constants/const.dart';
+import 'package:flutter_dark_store/model/my_product.dart';
 import 'package:flutter_dark_store/reusable_widgets/Reusable_material_button.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
@@ -37,6 +38,10 @@ List<Widget> addColors = [
 ];
 
 class AddProducts extends StatefulWidget {
+  final MyProducts product;
+
+  AddProducts({this.product});
+
   @override
   _AddProductsState createState() => _AddProductsState();
 }
@@ -47,8 +52,9 @@ class _AddProductsState extends State<AddProducts> {
   bool value = true;
   File _image;
   final ImagePicker picker = ImagePicker();
-  Map<int, File> imagePosition = {};
-  List<Color> colors = [Colors.amber];
+  Map<int, dynamic> imagePosition = {};
+  List<String> deletedImages = [];
+  List<int> colors = [4294951175];
 
   Color currentColor = Colors.limeAccent;
   GlobalKey<FormState> _formState = GlobalKey<FormState>();
@@ -61,7 +67,8 @@ class _AddProductsState extends State<AddProducts> {
   TextEditingController descController = TextEditingController();
 
   void changeColor(Color color) {
-    colors.add(color);
+    colors.add(color.value);
+    print(color.value);
     setState(() {
       addColors.add(
         Container(
@@ -111,14 +118,91 @@ class _AddProductsState extends State<AddProducts> {
   @override
   void initState() {
     super.initState();
-    _selectedValue = category[0];
-    _subSelectedValue = sub_category[0];
+    addColors.clear();
+    colors.clear();
+    imagePosition.clear();
+    _selectedValue = widget.product == null ? category[0] : widget.product.cat;
+    _subSelectedValue =
+        widget.product == null ? sub_category[0] : widget.product.sub_cat;
+    eNameController.text = widget.product == null ? "" : widget.product.name;
+    quantityController.text =
+        widget.product == null ? "" : widget.product.stock.toString();
+    oldPriceController.text =
+        widget.product == null ? "" : widget.product.oldPrice.toString();
+    newPriceController.text =
+        widget.product == null ? "" : widget.product.newPrice.toString();
+    sizeController.text = widget.product == null ? "" : widget.product.sizes;
+    descController.text = widget.product == null ? "" : widget.product.desc;
+
+    //show Color from My Product
+
+    if (widget.product == null) {
+      colors.add(4294951175);
+      addColors.add(
+        Container(
+          width: 38,
+          height: 35,
+          margin: EdgeInsets.only(right: 10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(Icons.minimize),
+        ),
+      );
+    } else {
+      String values =
+          widget.product.color.substring(1, widget.product.color.length - 1);
+      print(values);
+      while (values.contains(",")) {
+        colors.add(int.parse(values.split(",")[0]));
+        values = values.substring(values.indexOf(",") + 1);
+        print(values);
+      }
+      if (!values.contains(",")) {
+        colors.add(int.parse(values));
+      }
+
+      for (int color in colors) {
+        addColors.add(
+          Container(
+            width: 38,
+            height: 35,
+            margin: EdgeInsets.only(right: 10),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Color(color),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(Icons.minimize),
+          ),
+        );
+      }
+    }
+
+    //get image from myProducts
+
+    if (widget.product != null) {
+      String image = widget.product.image;
+      int index = 0;
+      print(image);
+
+      while (image.contains(",")) {
+        imagePosition.putIfAbsent(index, () => image.split(",")[0]);
+        image = image.substring(image.indexOf(",") + 1);
+        index++;
+      }
+      if (!image.contains(",")) {
+        imagePosition.putIfAbsent(index, () => image);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return ReusableAppbar(
-      title: "ADD PRODUCT",
+      title: widget.product == null ? "ADD PRODUCT" : "UPDATE PRODUCT",
       body: ListView(
         children: [
           Form(
@@ -173,8 +257,14 @@ class _AddProductsState extends State<AddProducts> {
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
-                                        child: Image.file(imagePosition[index],
-                                            fit: BoxFit.cover),
+                                        child: imagePosition[index] is File
+                                            ? Image.file(imagePosition[index],
+                                                fit: BoxFit.cover)
+                                            : Image.network(
+                                                image_url +
+                                                    imagePosition[index],
+                                                fit: BoxFit.cover,
+                                              ),
                                       ),
                                       Positioned(
                                         child: IconButton(
@@ -184,6 +274,8 @@ class _AddProductsState extends State<AddProducts> {
                                           ),
                                           onPressed: () {
                                             setState(() {
+                                              deletedImages
+                                                  .add(imagePosition[index]);
                                               imagePosition.remove(index);
                                             });
                                           },
@@ -510,6 +602,7 @@ class _AddProductsState extends State<AddProducts> {
                                     onTap: () {
                                       setState(() {
                                         addColors.removeAt(index);
+                                        colors.removeAt(index);
                                       });
                                     },
                                     child: addColors[index]))),
@@ -538,7 +631,9 @@ class _AddProductsState extends State<AddProducts> {
                         child: Builder(
                           builder: (BuildContext context) =>
                               ReusableMaterialButton(
-                            title: "ADD ITEM",
+                            title: widget.product == null
+                                ? "ADD ITEM"
+                                : "UPDATE ITEM",
                             pressMe: () async {
                               if (_formState.currentState.validate()) {
                                 if (imagePosition.isEmpty ||
@@ -575,26 +670,70 @@ class _AddProductsState extends State<AddProducts> {
                                     "sub_cat": _subSelectedValue,
                                     "sizes": sizeController.text,
                                   });
-                                  Response response = await DBHelper()
-                                      .addProduct(data, "products");
-                                  if (response.statusCode == 200) {
-                                    print(response.data);
-                                    Scaffold.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          "Item Added",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
+                                  if (widget.product == null) {
+                                    Response response = await DBHelper()
+                                        .addProduct(data, "products");
+                                    if (response.statusCode == 200) {
+                                      print(response.data);
+                                      Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            "Item Added",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          action: SnackBarAction(
+                                            onPressed: () {},
+                                            label: "OK",
+                                            textColor: Colors.white,
                                           ),
                                         ),
-                                        action: SnackBarAction(
-                                          onPressed: () {},
-                                          label: "OK",
-                                          textColor: Colors.white,
-                                        ),
-                                      ),
-                                    );
+                                      );
+                                    }
+                                  } else {
+                                    print(deletedImages);
+                                    FormData dataUpdate = FormData.fromMap({
+                                      "id": widget.product.pid,
+                                      "name": eNameController.text,
+                                      "img_path": await getAllImage(),
+                                      "desc": descController.text,
+                                      "price": checkForValue(),
+                                      "old_price":
+                                          int.parse(oldPriceController.text),
+                                      "color": colors.toString(),
+                                      "stock":
+                                          int.parse(quantityController.text),
+                                      "brand": "not know",
+                                      "type": "not know",
+                                      "cat": _selectedValue,
+                                      "sub_cat": _subSelectedValue,
+                                      "sizes": sizeController.text,
+                                      "deleted_images": deletedImages,
+                                    });
+                                    Response response = await DBHelper()
+                                        .addProduct(dataUpdate, "products");
+                                    if (response.statusCode == 200) {
+                                      print(response);
+//                                      Scaffold.of(context).showSnackBar(
+//                                        SnackBar(
+//                                          content: Text(
+//                                            "Item Updated",
+//                                            style: TextStyle(
+//                                              color: Colors.white,
+//                                              fontWeight: FontWeight.bold,
+//                                            ),
+//                                          ),
+//                                          action: SnackBarAction(
+//                                            onPressed: () {},
+//                                            label: "OK",
+//                                            textColor: Colors.white,
+//                                          ),
+//                                        ),
+//                                      );
+                                      Navigator.pop(context, true);
+                                    }
                                   }
                                 }
                               }
@@ -618,7 +757,6 @@ class _AddProductsState extends State<AddProducts> {
 
   void pickImage(ImageSource imageSource, int index) async {
     final PickedFile pickedFile = await picker.getImage(source: imageSource);
-
     setState(() {
       _image = File(pickedFile.path);
       imagePosition.putIfAbsent(index, () => _image);
@@ -627,11 +765,13 @@ class _AddProductsState extends State<AddProducts> {
 
   Future<List<dynamic>> getAllImage() async {
     List<dynamic> imgUpload = [];
-    for (File image in imagePosition.values) {
+    for (dynamic image in imagePosition.values) {
       if (image != null) {
-        imgUpload.add(await MultipartFile.fromFile(image.path));
+        if (image is File)
+          imgUpload.add(await MultipartFile.fromFile(image.path));
       }
     }
+    print(imgUpload);
     return imgUpload;
   }
 

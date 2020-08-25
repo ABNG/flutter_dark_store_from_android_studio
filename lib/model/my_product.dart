@@ -1,16 +1,31 @@
 class MyProducts {
-  final String name;
-  final double price;
-  final String image;
+  int pid;
+  String name;
+  int oldPrice;
+  String image;
+  int newPrice;
+  String desc;
+  String color;
+  int stock;
+  String brand;
+  String type;
+  String cat;
+  String sub_cat;
+  String sizes;
 
-  MyProducts({this.name, this.price, this.image});
-
-  static List<MyProducts> myProducts = [
-    MyProducts(name: "hello1", price: 99.00, image: 'images/dummy.jpg'),
-    MyProducts(name: "hello2", price: 99.00, image: 'images/dummy.jpg'),
-    MyProducts(name: "hello3", price: 99.00, image: 'images/dummy.jpg'),
-    MyProducts(name: "hello4", price: 99.00, image: 'images/dummy.jpg'),
-    MyProducts(name: "hello5", price: 99.00, image: 'images/dummy.jpg'),
-    MyProducts(name: "hello6", price: 99.00, image: 'images/dummy.jpg'),
-  ];
+  MyProducts.fromJson(Map<String, dynamic> data) {
+    this.pid = data["pid"];
+    this.name = data["name"];
+    this.oldPrice = data["old_price"];
+    this.image = data["img_path"];
+    this.newPrice = data["price"];
+    this.desc = data["desc"];
+    this.color = data["color"];
+    this.stock = data["stock"];
+    this.brand = data["brand"];
+    this.type = data["type"];
+    this.cat = data["cat"];
+    this.sub_cat = data["sub_cat"];
+    this.sizes = data["sizes"];
+  }
 }
