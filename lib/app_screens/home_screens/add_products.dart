@@ -154,11 +154,9 @@ class _AddProductsState extends State<AddProducts> {
     } else {
       String values =
           widget.product.color.substring(1, widget.product.color.length - 1);
-      print(values);
       while (values.contains(",")) {
         colors.add(int.parse(values.split(",")[0]));
         values = values.substring(values.indexOf(",") + 1);
-        print(values);
       }
       if (!values.contains(",")) {
         colors.add(int.parse(values));
@@ -186,7 +184,6 @@ class _AddProductsState extends State<AddProducts> {
     if (widget.product != null) {
       String image = widget.product.image;
       int index = 0;
-      print(image);
 
       while (image.contains(",")) {
         imagePosition.putIfAbsent(index, () => image.split(",")[0]);
@@ -693,7 +690,6 @@ class _AddProductsState extends State<AddProducts> {
                                       );
                                     }
                                   } else {
-                                    print(deletedImages);
                                     FormData dataUpdate = FormData.fromMap({
                                       "id": widget.product.pid,
                                       "name": eNameController.text,
@@ -771,7 +767,6 @@ class _AddProductsState extends State<AddProducts> {
           imgUpload.add(await MultipartFile.fromFile(image.path));
       }
     }
-    print(imgUpload);
     return imgUpload;
   }
 

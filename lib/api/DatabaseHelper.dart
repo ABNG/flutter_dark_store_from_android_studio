@@ -43,8 +43,8 @@ class DBHelper {
     return response;
   }
 
-  Future<Response> updateProduct(data, apiUrl) async {
-    Response response = await SingletonDio().getAuthenticate(data, apiUrl);
-    return response;
-  }
+//  Future<Response> updateProduct(data, apiUrl) async {
+//    Response response = await SingletonDio().getAuthenticate(data, apiUrl);
+//    return response;
+//  }
 }

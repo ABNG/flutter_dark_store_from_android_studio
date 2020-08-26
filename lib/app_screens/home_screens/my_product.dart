@@ -6,6 +6,7 @@ import 'package:flutter_dark_store/model/my_product.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_appbar.dart';
 import 'package:flutter_dark_store/reusable_widgets/reusable_raised_button.dart';
 import 'package:flutter_dark_store/utils/SizeConfig.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MyProduct extends StatefulWidget {
   @override
@@ -16,11 +17,21 @@ class _MyProductState extends State<MyProduct> {
   List<MyProducts> products = List<MyProducts>();
   List<MyProducts> filterProducts = List<MyProducts>();
   bool isLoading = true;
+  RefreshController _refreshController;
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getAllProducts();
+    _refreshController = RefreshController(initialRefresh: false);
+  }
+
+  void _onRefresh() async {
+    searchController.text = "";
+    isLoading = true;
+    getAllProducts();
+    _refreshController.refreshCompleted();
   }
 
   void getAllProducts() async {
@@ -41,6 +52,7 @@ class _MyProductState extends State<MyProduct> {
         child: Column(
           children: [
             TextField(
+              controller: searchController,
               style: defaultStyle,
               cursorColor: Colors.grey,
               decoration: InputDecoration(
@@ -75,96 +87,102 @@ class _MyProductState extends State<MyProduct> {
                         ),
                       )
                     : Expanded(
-                        child: GridView.count(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 3,
-                          crossAxisSpacing: 3,
-                          childAspectRatio: 0.78,
-                          children: List.generate(
-                            products.length,
-                            (index) => Card(
-                              elevation: 3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: SizeConfig.screenHeight * 0.15,
-                                    width: double.infinity,
-                                    child: Image.network(
-                                      image_url +
-                                          products[index].image.split(",")[0],
-                                      fit: BoxFit.cover,
+                        child: SmartRefresher(
+                          enablePullDown: true,
+                          onRefresh: _onRefresh,
+                          controller: _refreshController,
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            childAspectRatio: 0.78,
+                            children: List.generate(
+                              products.length,
+                              (index) => Card(
+                                elevation: 3,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: SizeConfig.screenHeight * 0.15,
+                                      width: double.infinity,
+                                      child: Image.network(
+                                        image_url +
+                                            products[index].image.split(",")[0],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  Spacer(),
-                                  Text(products[index].name),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.baseline,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    children: [
-                                      Text(
-                                        "${products[index].oldPrice.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          color: Colors.red,
+                                    Spacer(),
+                                    Text(products[index].name),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.baseline,
+                                      textBaseline: TextBaseline.alphabetic,
+                                      children: [
+                                        Text(
+                                          "${products[index].oldPrice.toStringAsFixed(2)}",
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.red,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        "AED",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.red,
+                                        Text(
+                                          "AED",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.red,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: ReusableRaisedButton(
-                                          text: "Remove",
-                                          pressMe: () async {
-                                            bool value =
-                                                await Products.removeProduct(
-                                                    products[index].pid);
-                                            if (value) {
-                                              setState(() {
-                                                products.removeAt(index);
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: ReusableRaisedButton(
+                                            text: "Remove",
+                                            pressMe: () async {
+                                              bool value =
+                                                  await Products.removeProduct(
+                                                      products[index].pid);
+                                              if (value) {
+                                                setState(() {
+                                                  products.removeAt(index);
+                                                });
+                                              }
+                                            },
+                                            color: Colors.red,
+                                            height:
+                                                SizeConfig.screenHeight * 0.04,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: ReusableRaisedButton(
+                                            text: "Edit",
+                                            pressMe: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          AddProducts(
+                                                              product: products[
+                                                                  index]))).then(
+                                                  (value) {
+                                                if (value) getAllProducts();
                                               });
-                                            }
-                                          },
-                                          color: Colors.red,
-                                          height:
-                                              SizeConfig.screenHeight * 0.04,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: ReusableRaisedButton(
-                                          text: "Edit",
-                                          pressMe: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        AddProducts(
-                                                            product: products[
-                                                                index]))).then(
-                                                (value) {
-                                              if (value) getAllProducts();
-                                            });
-                                          },
-                                          color: Colors.green,
-                                          height:
-                                              SizeConfig.screenHeight * 0.04,
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
+                                            },
+                                            color: Colors.green,
+                                            height:
+                                                SizeConfig.screenHeight * 0.04,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),

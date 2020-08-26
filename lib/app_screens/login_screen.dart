@@ -142,6 +142,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                 } else {
                                   SharedPreferences pref = await _prefs;
                                   await pref.setBool(login_key, true);
+                                  await pref.setString(email, emailController.text);
                                   navigation(context);
                                 }
                               }

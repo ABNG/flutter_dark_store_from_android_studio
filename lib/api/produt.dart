@@ -34,9 +34,9 @@ class Products {
     return _products;
   }
 
-  static Future<bool> updateProduct(result) async {
-    Response response = await DBHelper().updateProduct(result, "editProduct");
-    bool _value = response.data["status"];
-    return _value;
-  }
+//  static Future<bool> updateProduct(result) async {
+//    Response response = await DBHelper().updateProduct(result, "editProduct");
+//    bool _value = response.data["status"];
+//    return _value;
+//  }
 }

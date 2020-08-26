@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const String login_key = "login_key";
+const String email="my_email";
 
 const subtitle = Text(
   "STORES",
